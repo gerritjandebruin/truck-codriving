@@ -14,6 +14,8 @@ def pipeline(
     Δt_max: float, min_timedelta: float):
   """Returns the systematic and random cooccurrences resp. for the parameters.
   """
+  os.makedirs(output_filepath, exist_ok=True)
+
   logger = logging.getLogger(__name__)
   if 'systematic.pkl' in os.listdir(output_filepath):
     logger.error(
