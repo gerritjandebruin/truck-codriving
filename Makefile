@@ -1,4 +1,4 @@
-.PHONY: data step1
+.PHONY: data step1 events networks
 
 data: step1 step2 step3
 
@@ -22,3 +22,6 @@ data/3-process/data.pkl: data/2-merge/data.pkl
 
 src/teexgraph/teexgraph:
 	cd src/teexgraph && make listener
+
+networks: data/3-process/data.pkl
+	python src/network/make_networks.py $< networks/ -dt 1 -dt 2 -dt 4 -dt 8 -dt 16 -dt 32 -dt 64 -dt 128 -dt 256 -dt 512
