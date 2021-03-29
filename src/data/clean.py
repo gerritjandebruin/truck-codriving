@@ -51,7 +51,7 @@ def main(input_filepath, output_filepath, min_measured):
     logger = logging.getLogger(__name__)
     logger.info(f'clean {input_filepath=} to {output_filepath=}')
 
-    merge(input_filepath, output_filepath)
+    clean(input_filepath, output_filepath)
 
 
 if __name__ == '__main__':
