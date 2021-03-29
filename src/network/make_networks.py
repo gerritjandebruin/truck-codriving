@@ -54,8 +54,10 @@ def main(input_filepath, output_filepath, dt_max_list, min_timedelta):
 
   joblib.Parallel(n_jobs=len(dt_max_list))(
     joblib.delayed(pipeline)(
-      events, output_filepath, 
-      Δt_max=Δt_max, min_timedelta=min_timedelta)
+      events, 
+      output_filepath=os.path.join(output_filepath, str(int(Δt_max))),
+      Δt_max=Δt_max, 
+      min_timedelta=min_timedelta)
     for Δt_max in dt_max_list
   )
 
