@@ -19,3 +19,6 @@ data/2-merge/data.pkl: data/1-import/csv-data.pkl data/1-import/zip-data.pkl
 
 data/3-process/data.pkl: data/2-merge/data.pkl
 	python src/data/clean.py $< $@
+
+src/teexgraph/teexgraph:
+	cd src/teexgraph && make listener
