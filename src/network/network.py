@@ -31,7 +31,7 @@ def main(input_filepath, output_filepath):
   logger.info(f'Load cooccurrences, args: {locals()}')
   cooccurrences = joblib.load(input_filepath)
 
-  logger.info(f'Create network, args: {locals()}')
+  logger.info(f'Create network')
   graph = create_graph(cooccurrences)
 
   logger.info(f'Dump graph')
