@@ -1,12 +1,15 @@
-from collections import deque
-from typing import NamedTuple
+import collections
+import logging
+import typing
 
+import click
 import pandas as pd
+import joblib
 from tqdm.auto import tqdm
 
-from .event import Event
+from .event import get_events, Event
 
-class Cooccurrence(NamedTuple):
+class Cooccurrence(typing.NamedTuple):
   """
   Class mapping two events that were coinciding within deltaTime (optionally, at
   the same loc).
@@ -35,7 +38,7 @@ def get_cooccurrences(
     events_per_location[event.location].append(event)
   
   cooccurrences = list()
-  queue = deque()
+  queue = collections.deque()
   for location, events in tqdm(events_per_location.items(), position=0, 
                                desc='get cooccurrences',
                                disable=not verbose, leave=False):
@@ -82,3 +85,35 @@ def divide_cooccurrences(
     else:
       random.extend(cooccurrences)
   return systematic, random 
+
+@click.command()
+@click.argument('input_filepath', type=click.Path(exists=True))
+@click.argument('output_filepath_systematic', type=click.Path())
+@click.argument('output_filepath_random', type=click.Path())
+@click.option('--dt_max', type=int)
+@click.option('--min_timedelta', default=pd.Timedelta('3h'))
+def main(input_filepath, output_filepath_systematic, output_filepath_random, 
+         dt_max, min_timedelta):
+  logger = logging.getLogger(__name__)
+
+  logger.info(f'Start making networks, args: {locals()}')
+  data = joblib.load(input_filepath)
+  events = get_events(data=data)
+
+  cooccurrences = get_cooccurrences(events, 
+                                    max_timedelta=pd.Timedelta(f'{dt_max}s'))
+
+  systematic, random = divide_cooccurrences(cooccurrences, 
+                                            min_timedelta=min_timedelta)
+  logger.info(f'Dump systematic, random for {dt_max=}')
+
+  joblib.dump(systematic, output_filepath_systematic)
+  joblib.dump(random, output_filepath_random)
+
+  logger.info(f'Done {dt_max=}')
+
+if __name__ == '__main__':
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    main()
