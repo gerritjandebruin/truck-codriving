@@ -1,5 +1,8 @@
 .PHONY: data step1 events networks
 
+DTMAX = 1 2 4 8 16 32 64 128 256 512
+COOCCURRENCEFILES = $(patsubst %,networks/%/cooccurrences.pkl,$(DTMAX))
+
 data: step1 step2 step3
 
 step1: data/1-import/zip-data.pkl data/1-import/csv-data.pkl
@@ -23,5 +26,10 @@ data/3-process/data.pkl: data/2-merge/data.pkl
 src/teexgraph/teexgraph:
 	cd src/teexgraph && make listener
 
-networks: data/3-process/data.pkl
-	python src/network/make_networks.py $< networks/ -dt 1 -dt 2 -dt 4 -dt 8 -dt 16 -dt 32 -dt 64 -dt 128 -dt 256 -dt 512
+networks/%: 
+	mkdir $@
+
+networks/%/cooccurrences.pkl: data/3-process/data.pkl networks/%
+	python -m src.network.determine_random_systematic $< $@ --dt_max $*
+
+networks: $(COOCCURRENCEFILES)

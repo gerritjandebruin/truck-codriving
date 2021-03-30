@@ -4,7 +4,7 @@ from typing import NamedTuple
 import pandas as pd
 from tqdm.auto import tqdm
 
-from event import Event
+from .event import Event
 
 class Cooccurrence(NamedTuple):
   """

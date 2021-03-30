@@ -1,5 +1,5 @@
 import networkx as nx
-from cooccurrence import Cooccurrence
+from .cooccurrence import Cooccurrence
 
 def add_edge(graph: nx.Graph, u: str, v: str) -> None:
   """Add edge to graph. If already exists, add one weight."""
