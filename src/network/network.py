@@ -29,10 +29,10 @@ def create_graph(cooccurrences: list[Cooccurrence]) -> nx.Graph:
 def main(input_filepath, output_filepath):
   logger = logging.getLogger(__name__)
   logger.info(f'Load cooccurrences, args: {locals()}')
-  systematic = joblib.load(input_filepath)['systematic']
+  cooccurrences = joblib.load(input_filepath)
 
   logger.info(f'Create network, args: {locals()}')
-  graph = create_graph(systematic)
+  graph = create_graph(cooccurrences)
 
   logger.info(f'Dump graph')
   joblib.dump(graph, output_filepath)
