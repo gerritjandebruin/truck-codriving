@@ -27,7 +27,7 @@ def create_graph(cooccurrences: list[Cooccurrence]) -> nx.Graph:
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())
 def main(input_filepath, output_filepath):
-  logger = logging.getLogger(__name__)
+  logger = logging.getLogger(__file__)
   logger.info(f'Load cooccurrences, args: {locals()}')
   cooccurrences = joblib.load(input_filepath)
 

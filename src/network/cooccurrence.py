@@ -94,7 +94,7 @@ def divide_cooccurrences(
 @click.option('--min_timedelta', default=pd.Timedelta('3h'))
 def main(input_filepath, output_filepath_systematic, output_filepath_random, 
          dt_max, min_timedelta):
-  logger = logging.getLogger(__name__)
+  logger = logging.getLogger(__file__)
 
   logger.info(f'Start making networks, args: {locals()}')
   data = joblib.load(input_filepath)
