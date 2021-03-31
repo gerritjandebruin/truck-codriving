@@ -54,10 +54,10 @@ networks/%/distance_distribution.txt: networks/%/giant_component.pkl
 	python -m src.network.distance_distribution $< $@
 
 networks/8/dutch_graph_attributes.pkl: networks/8/graph.pkl data/3-process/data.pkl data/3-process/rdw.pkl
-	python -m src.network.attributes $^ --type dutch $@
+	python -m src.network.attributes $< $(word 2,$^) --type dutch --rdw $(word 3,$^) -o $@
 
 networks/8/graph_attributes.pkl: networks/8/graph.pkl data/3-process/data.pkl
-	python -m src.network.attributes $^ --type full $@
+	python -m src.network.attributes $^ --type full -o $@
 
 ## teexgraph: Install teexgraph
 .PHONY : teexgraph
