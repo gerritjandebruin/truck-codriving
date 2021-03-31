@@ -63,7 +63,7 @@ def dutch(network_filepath, data_filepath, dutch_filepath, output_filepath):
     'capacity': 'LAADVERMOGEN',
     'company': 'RDW_NAAM'
   }
-  for name, column in attributes:
+  for name, column in attributes.items():
     nx.set_node_attributes(g, dutch[column].dropna().to_dict(), name=name)
   
   nx.set_node_attributes(
@@ -76,16 +76,21 @@ def dutch(network_filepath, data_filepath, dutch_filepath, output_filepath):
       (dutch['RDW_POSTC_N'].dropna() / 10**(3-i)).astype('int').to_dict())
     nx.set_node_attributes(g, zip_data, name=f'zip{i+1}')
 
+  with open(output_filepath, 'wb') as file:
+    pickle.dump(g, file)
+
 if __name__ == '__main__':
   p = argparse.ArgumentParser(
     description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-  p.add_argument('network_filepath',
-                 help='Name of file containing pickle of nx.Graph')
-  p.add_argument('data_filepath',
-                 help='Name of file containing pickle of the data')
-  p.add_argument('rdw_filepath', help='Location of rdw datafile.')
+  p.add_argument(
+    'network_filepath', help='Name of file containing pickle of nx.Graph')
+  p.add_argument(
+    'data_filepath', help='Name of file containing pickle of the data')
+  p.add_argument(
+    '--rdw_filepath', help='Location of rdw datafile.', required=False)
   p.add_argument('--type', choices=['full', 'dutch'])
-  p.add_argument('output_filepath', help='Location where result will be stored')
+  p.add_argument(
+    '-o', '--output_filepath', help='Location where result will be stored')
   args = p.parse_args()
 
   logging.debug(f'Arguments: {globals()}')
