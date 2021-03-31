@@ -12,7 +12,7 @@ clean:
 
 ## data 	  : Process raw data.
 .PHONY : data
-data: data/3-process/data.pkl
+data: data/3-process/data.pkl data/3-process/rdw.pkl
 
 data/1-import/zip-data.pkl:
 	python src/data/make_zip_dataset.py data/0-raw/zip/ $@
@@ -25,6 +25,9 @@ data/2-merge/data.pkl: data/1-import/csv-data.pkl data/1-import/zip-data.pkl
 
 data/3-process/data.pkl: data/2-merge/data.pkl
 	python src/data/clean.py $< $@
+
+data/3-process/rdw.pkl: data/0-raw/other/rdw1.csv data/0-raw/other/rdw2.csv
+	python -m src.data.make_rdw_dataset $^ $@
 
 ## networks	: Construct networks for various values of delta_t_max
 .PHONY: networks
@@ -49,3 +52,8 @@ teexgraph: src/teexgraph/teexgraph
 
 src/teexgraph/teexgraph:
 	cd src/teexgraph && make listener
+
+## reports: Make reports
+.PHONY : reports
+reports/Fig1.pdf: data/3-process/data.pkl
+	python -m src.visualization.Figure1 $< $@
