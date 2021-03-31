@@ -1,4 +1,4 @@
-OBJECTS = 1 2 4 8 16 32 64 # 128 256 512
+OBJECTS = 1 2 4 8 16 32 64 128 256 512
 OBJ_DIR = $(patsubst %,networks/%,$(OBJECTS))
 OBJ_GRAPH = $(patsubst %,networks/%/graph.pkl,$(OBJECTS))
 OBJ_COOCCURRENCES = $(patsubst %,networks/%/cooccurrences.pkl,$(OBJECTS))
@@ -8,11 +8,17 @@ OBJ_DISTANCE_DISTRIBUTION = $(patsubst %,networks/%/distance_distribution.txt,$(
 
 all: data networks
 
-## clean		: Clean pycache directories.
+## clean          : Clean pycache directories.
+PHONY: clean
 clean:
 	find . -name '__pycache__' -exec rm -fr {} +
 
-## data 	  : Process raw data.
+## help           : Show this message.
+PHONY: help
+help:           
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+
+## data           : Process raw data.
 .PHONY : data
 data: data/3-process/data.pkl data/3-process/rdw.pkl
 
@@ -31,7 +37,7 @@ data/3-process/data.pkl: data/2-merge/data.pkl
 data/3-process/rdw.pkl: data/0-raw/other/rdw1.csv data/0-raw/other/rdw2.csv
 	python -m src.data.make_rdw_dataset $^ $@
 
-## networks	: Construct networks for various values of delta_t_max
+## networks       : Construct networks for various values of delta_t_max
 .PHONY: networks
 networks: $(OBJ_DIR) $(OBJ_GRAPH) $(OBJ_COOCCURRENCES) 
 
@@ -45,6 +51,7 @@ networks/%/cooccurrences.pkl: data/3-process/data.pkl | networks/%/
 networks/%/graph.pkl: networks/%/cooccurrences.pkl
 	python -m src.network.network $< $@
 
+## networkanalysis: Calculate giant_component and distance_distribution for all networks and attributes for dt_max = 8s
 .PHONY: networkanalysis
 networkanalysis: $(OBJ_GIANT_COMPONENT) $(OBJ_DISTANCE_DISTRIBUTION) networks/8/dutch_graph_attributes.pkl networks/8/graph_attributes.pkl
 networks/%/giant_component.pkl: networks/%/graph.pkl
