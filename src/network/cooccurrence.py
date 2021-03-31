@@ -1,3 +1,12 @@
+"""
+Get cooccurrences from the data. A cooccurrence happens when two trucks are at
+the same location within at most dt_max seconds from each other.
+
+A *systematic* cooccurrence happens when this happens for two trucks at least 
+two times in the data, with a time interval of at least min_timedelta.
+"""
+
+
 import collections
 import logging
 import typing
@@ -92,8 +101,9 @@ def divide_cooccurrences(
 @click.argument('output_filepath_random', type=click.Path())
 @click.option('--dt_max', type=int)
 @click.option('--min_timedelta', default=pd.Timedelta('3h'))
-def main(input_filepath, output_filepath_systematic, output_filepath_random, 
-         dt_max, min_timedelta):
+def main(
+    input_filepath, output_filepath_systematic, output_filepath_random, dt_max, 
+    min_timedelta):
   logger = logging.getLogger(__file__)
 
   logger.info(f'Start making networks, args: {locals()}')
@@ -115,5 +125,7 @@ def main(input_filepath, output_filepath_systematic, output_filepath_random,
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+
 
     main()

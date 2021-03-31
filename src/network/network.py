@@ -1,7 +1,7 @@
 import logging
+import pickle
 
 import click
-import joblib
 import networkx as nx
 
 from .cooccurrence import Cooccurrence
@@ -29,13 +29,15 @@ def create_graph(cooccurrences: list[Cooccurrence]) -> nx.Graph:
 def main(input_filepath, output_filepath):
   logger = logging.getLogger(__file__)
   logger.info(f'Load cooccurrences, args: {locals()}')
-  cooccurrences = joblib.load(input_filepath)
+  with open(input_filepath, 'rb') as file:
+    cooccurrences = pickle.load(file)
 
   logger.info(f'Create network')
   graph = create_graph(cooccurrences)
 
   logger.info(f'Dump graph')
-  joblib.dump(graph, output_filepath)
+  with open(output_filepath, 'wb') as file:
+    pickle.dump(graph, file)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
