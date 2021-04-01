@@ -48,10 +48,10 @@ def main(input_filepath, output_filepath, min_measured):
     """ Runs data processing scripts to turn merged data from (../2-merge) into
         cleaned data ready to be analyzed (saved in ../3-process).
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__file__)
     logger.info(f'clean {input_filepath=} to {output_filepath=}')
 
-    merge(input_filepath, output_filepath)
+    clean(input_filepath, output_filepath)
 
 
 if __name__ == '__main__':

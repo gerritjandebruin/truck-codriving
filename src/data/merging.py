@@ -27,7 +27,7 @@ def main(csv_file, zip_file, out):
     """ Runs data processing scripts to turn imported data from (../1-import) 
         into merged data (saved in ../2-merge).
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__file__)
     logger.info(f'merge {csv_file=} and {zip_file=} to {out=}')
 
     merge(csv_file, zip_file, out)

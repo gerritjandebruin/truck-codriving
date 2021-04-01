@@ -82,7 +82,7 @@ def main(input_filepath, output_filepath):
     """ Runs data processing scripts to turn raw data from (../0-raw/zip) into
         serialized data ready to be used in Pandas (saved in ../1-import).
     """
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(__file__)
     logger.info(f'making data set from {input_filepath}')
 
     get_zip_data(input_filepath, output_filepath)
