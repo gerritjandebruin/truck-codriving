@@ -6,12 +6,13 @@ OBJ_COOCCURRENCES = $(patsubst %,networks/%/cooccurrences.pkl,$(OBJECTS))
 OBJ_GIANT_COMPONENT = $(patsubst %,networks/%/giant_component.pkl,$(OBJECTS))
 OBJ_DISTANCE_DISTRIBUTION = $(patsubst %,networks/%/distance_distribution.txt,$(OBJECTS))
 
-all: data networks
+all: data networks networkanalysis
 
 ## clean          : Clean pycache directories.
 PHONY: clean
 clean:
 	find . -name '__pycache__' -exec rm -fr {} +
+	find . -name '.ipynb_checkpoints' -exec rm -fr {} +
 
 ## help           : Show this message.
 PHONY: help

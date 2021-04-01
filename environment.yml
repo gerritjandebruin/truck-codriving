@@ -1,0 +1,17 @@
+name: /local/bruingjde/conda_envs/gj
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9.2
+  - click=7.1.2
+  - tqdm=4.59.0
+  - scikit-learn=0.24.1
+  - pandas=1.2.3
+  - networkx=2.5
+  - jupyter=1.0.0
+  - matplotlib=3.3.4
+  - seaborn=0.11.1
+  - powerlaw=1.4.6
+  - leidenalg=0.8.3
+  - python-louvain=0.15
+prefix: /local/bruingjde/conda_envs/gj
