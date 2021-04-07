@@ -1,0 +1,4 @@
+[submodule "src/teexgraph"]
+	path = src/teexgraph
+	url = git@github.com:franktakes/teexgraph.git
+	ignore = untracked

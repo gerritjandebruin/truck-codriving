@@ -1,0 +1,8 @@
+# Running:
+- gridsearch model 1
+- feature construction and gridsearch model 2
+- check if max_depth = 3
+- feature importance
+- Table 3
+- Fig 6+7
+- check if AUC = 0.84
