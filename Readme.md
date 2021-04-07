@@ -5,17 +5,24 @@ This repository provides the code used in the following publication:
 ## Organization
 
     ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make help`, `make data`, `make networks` and `make networkanalysis`
+    ├── Makefile           <- Run `make help` to see all available commands
     ├── README.md          <- This file
     ├── data
     │   ├── 0-raw          <- The original, immutable data dump.
     │   ├── 1-import       <- After importing
     │   ├── 2-merged       
     │   └── 3-process      <- Fully cleaned data
+    ├── models             <- Models used in link prediction. See configuration.json of each.
+    │   ├── 1          
+    │   ├── 2
+    │   └── 3       
     ├── networks           <- Networks obtained for various values of delta_t
     ├── notebooks          <- Notebooks used for exploratory data analysis and figures.
-    │   └── 03-gj-figures.ipynb <- Generated graphics and figures to be used in reporting    
+    │   ├── 02-reports-cn2018.ipynb <- Generated graphics and figures in reports/cn2018
+    |   └── 04-reports-cn2019.ipynb <- Generated graphics and figures in reports/cn2019
     ├── reports            <- Generated figures
+    │   ├── cn2018         <- Generated graphics and figures in reports/cn2018
+    |   └── cn2019         <- Generated graphics and figures in reports/cn2019
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   ├── data           <- Scripts to download or generate data
