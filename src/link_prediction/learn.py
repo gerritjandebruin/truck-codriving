@@ -34,7 +34,7 @@ if __name__ == '__main__':
   p.add_argument('ytrain_filepath', help='Filepath where xtest is stored.')
   p.add_argument('ytest_filepath', help='Filepath where ytest is stored.')
   p.add_argument('output_filepath', help='Filepath where performance is stored')
-  p.add_argument('--max-depth', default=None)
+  p.add_argument('--max-depth', default=None, type=int)
   args = p.parse_args()
 
   logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s') 
