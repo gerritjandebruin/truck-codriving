@@ -26,6 +26,8 @@ if __name__ == '__main__':
   p.add_argument('--test_size', type=float, default=.1)
   args = p.parse_args()
 
+  logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
+
   X = pd.read_pickle(args.features_filepath)
   y = np.load(args.targets_filepath)
   

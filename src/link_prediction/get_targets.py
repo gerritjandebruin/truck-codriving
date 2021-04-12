@@ -25,7 +25,7 @@ if __name__ == '__main__':
     help='Location where result will be stored. Will be stored using numpy.')
   args = p.parse_args()
   
-  logging.basicConfig(level=logging.INFO, format='%(asctime)')
+  logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
   logging.info('Load graph.')
   with open(args.input_graph, 'rb') as file:

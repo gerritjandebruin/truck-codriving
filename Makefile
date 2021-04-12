@@ -118,4 +118,4 @@ models/%/gridsearch.pkl: models/%/xtrain.pkl models/%/ytrain.npy
 	python -m src.link_prediction.gridsearch $^ $@
 
 models/%/performance.pkl: models/%/xtrain.pkl models/%/xtest.pkl models/%/ytrain.npy models/%/ytest.npy
-	python -m src.link_prediction.learn $^ $@
+	python -m src.link_prediction.learn $^ $@ --max-depth 3

@@ -75,8 +75,8 @@ if __name__ == '__main__':
     help='Location where result will be stored. Will be stored using numpy.')
   args = p.parse_args()
 
-  logging.basicConfig(level=logging.INFO, format='%(asctime)')
-
+  logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s') 
+  
   with open(args.configuration_filepath) as file:
     configuration = json.load(file)
     logging.info(f'{configuration=}')

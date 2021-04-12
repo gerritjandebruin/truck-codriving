@@ -6,10 +6,11 @@ import pandas as pd
 import sklearn.ensemble
 import sklearn.metrics
 
-def learn(xtrain, xtest, ytrain, ytest):
-  logging.info('Start learning model')
+def learn(xtrain, xtest, ytrain, ytest, max_depth):
+  logging.info(f'Start learning model with {max_depth=}')
   clf = sklearn.ensemble.RandomForestClassifier(
-    n_estimators=128, class_weight='balanced', n_jobs=-1, verbose=100) #type: ignore
+    n_estimators=128, max_depth=max_depth, #type: ignore
+    class_weight='balanced', n_jobs=-1, verbose=5) #type: ignore
   clf.fit(xtrain, ytrain)
 
   logging.info('Start testing model')
@@ -33,6 +34,7 @@ if __name__ == '__main__':
   p.add_argument('ytrain_filepath', help='Filepath where xtest is stored.')
   p.add_argument('ytest_filepath', help='Filepath where ytest is stored.')
   p.add_argument('output_filepath', help='Filepath where performance is stored')
+  p.add_argument('--max-depth', default=None)
   args = p.parse_args()
 
   logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s') 
@@ -45,7 +47,7 @@ if __name__ == '__main__':
   logging.info('Start reading ytest')
   ytest = np.load(args.ytest_filepath)  
   
-  result = learn(xtrain, xtest, ytrain, ytest)
+  result = learn(xtrain, xtest, ytrain, ytest, args.max_depth)
   
   with open(args.output_filepath, 'wb') as file:
     pickle.dump(result, file)
